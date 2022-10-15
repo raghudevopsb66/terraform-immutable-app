@@ -10,3 +10,7 @@ variable "PROMETHEUS_IP" {
 }
 
 variable "APP_VERSION" {}
+variable "desired_capacity" {}
+variable "max_size" {}
+variable "min_size" {}
+
