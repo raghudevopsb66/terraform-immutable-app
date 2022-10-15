@@ -37,6 +37,12 @@ resource "aws_launch_template" "launch-template" {
   }))
 }
 
+resource "null_resource" "test" {
+  provisioner "local-exec" {
+    command = "echo REDIS ENDPOINT = ${data.aws_ssm_parameter.redis-endpoint.value}"
+  }
+}
+
 resource "aws_autoscaling_group" "asg" {
   name                = "${var.COMPONENT}-${var.ENV}"
   vpc_zone_identifier = data.terraform_remote_state.infra.outputs.app_subnets
