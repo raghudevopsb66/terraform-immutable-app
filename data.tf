@@ -27,4 +27,8 @@ data "aws_ssm_parameter" "credentials" {
   name = "mutable.docdb.${var.ENV}.credentials"
 }
 
+data "aws_ssm_parameter" "docdb-endpoint" {
+  name = "immutable.docdb.endpoint"
+}
+
 
