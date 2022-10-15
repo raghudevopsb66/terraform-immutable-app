@@ -31,4 +31,7 @@ data "aws_ssm_parameter" "docdb-endpoint" {
   name = "immutable.docdb.endpoint"
 }
 
+data "aws_ssm_parameter" "redis-endpoint" {
+  name = "immutable.redis.endpoint"
+}
 
