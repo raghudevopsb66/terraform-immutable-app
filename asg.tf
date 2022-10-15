@@ -38,8 +38,11 @@ resource "aws_launch_template" "launch-template" {
 }
 
 resource "null_resource" "test" {
+  triggers = {
+    name = timestamp()
+  }
   provisioner "local-exec" {
-    command = "echo REDIS ENDPOINT = ${data.aws_ssm_parameter.redis-endpoint.value}"
+    command = "echo REDIS ENDPOINT = ${data.aws_ssm_parameter.redis-endpoint.value} >/tmp/out"
   }
 }
 
