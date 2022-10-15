@@ -28,8 +28,9 @@ resource "aws_launch_template" "launch-template" {
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
     ENV                    = var.ENV
     COMPONENT              = var.COMPONENT
-    CATALOGUE_MONGO_URL    =
-    USERS_MONGO_URL        = var.DOCDB_ENDPOINT
+    DOCDB_ENDPOINT         =
+    DOCDB_USER             = local.username
+    DOCDB_PASS             = local.password
     MYSQL_ENDPOINT         = var.MYSQL_ENDPOINT
     REDIS_ENDPOINT         = var.REDIS_ENDPOINT
   }))

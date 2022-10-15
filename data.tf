@@ -24,6 +24,7 @@ data "aws_route53_zone" "private" {
 }
 
 data "aws_ssm_parameter" "credentials" {
-  name = " immutable.docdb.${var.COMPONENT}.${var.ENV}.MONGO_URL"
+  name = "mutable.docdb.${var.ENV}.credentials"
 }
+
 
