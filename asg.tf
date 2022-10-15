@@ -37,7 +37,8 @@ resource "aws_launch_template" "launch-template" {
   }))
 }
 
-resource "aws_autoscaling_group" "bar" {
+resource "aws_autoscaling_group" "asg" {
+  name                = "${var.COMPONENT}-${var.ENV}"
   vpc_zone_identifier = data.terraform_remote_state.infra.outputs.app_subnets
   desired_capacity    = var.desired_capacity
   max_size            = var.max_size
