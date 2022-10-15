@@ -40,9 +40,9 @@ resource "aws_launch_template" "launch-template" {
 resource "aws_autoscaling_group" "asg" {
   name                = "${var.COMPONENT}-${var.ENV}"
   vpc_zone_identifier = data.terraform_remote_state.infra.outputs.app_subnets
-  desired_capacity    = var.desired_capacity
+  desired_capacity    = 1
   max_size            = var.max_size
-  min_size            = var.min_size
+  min_size            = 1
   target_group_arns   = [aws_lb_target_group.tg.*.arn[0]]
 
   launch_template {
