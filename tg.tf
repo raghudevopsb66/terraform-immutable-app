@@ -16,21 +16,21 @@ resource "aws_lb_target_group" "tg" {
   }
 }
 
-//resource "aws_lb_listener_rule" "name-based-rule" {
-//  count        = var.COMPONENT == "frontend" ? 0 : 1
-//  listener_arn = data.terraform_remote_state.infra.outputs.private_lb_listener_arn
-//  priority     = var.LB_RULE_PRIORITY
-//
-//  action {
-//    type             = "forward"
-//    target_group_arn = aws_lb_target_group.tg[0].arn
-//  }
-//
-//  condition {
-//    host_header {
-//      values = ["${var.COMPONENT}-${var.ENV}.roboshop.internal"]
-//    }
-//  }
-//}
-//
-//
+resource "aws_lb_listener_rule" "name-based-rule" {
+  count        = var.COMPONENT == "frontend" ? 0 : 1
+  listener_arn = data.terraform_remote_state.infra.outputs.private_lb_listener_arn
+  priority     = var.LB_RULE_PRIORITY
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tg[0].arn
+  }
+
+  condition {
+    host_header {
+      values = ["${var.COMPONENT}-${var.ENV}.roboshop.internal"]
+    }
+  }
+}
+
+
