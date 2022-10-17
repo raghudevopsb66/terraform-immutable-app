@@ -6,7 +6,7 @@ resource "aws_launch_template" "launch-template" {
     market_type = "spot"
   }
 
-  instance_type = "t2.micro"
+  instance_type = var.INSTANCE_TYPE
 
 
   vpc_security_group_ids = [aws_security_group.main.id]
