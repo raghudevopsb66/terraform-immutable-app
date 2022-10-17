@@ -35,3 +35,6 @@ data "aws_ssm_parameter" "redis-endpoint" {
   name = "immutable.redis.endpoint"
 }
 
+data "aws_ssm_parameter" "rds-endpoint" {
+  name = "immutable.rds.${var.ENV}.DB_HOST"
+}
