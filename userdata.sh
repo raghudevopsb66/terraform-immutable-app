@@ -7,12 +7,6 @@ if [ -f /etc/nginx/default.d/roboshop.conf ]; then
   exit
 fi
 
-if [ "${COMPONENT}" == "user" ]; then
-  DB_NAME=users
-else
-  DB_NAME=$COMPONENT
-fi
-
 MEM=$(echo $(free -m  | grep ^Mem | awk '{print $2}')*0.8 |bc | awk -F . '{print $1}')
 sed -i  -e "s/ENV/${ENV}/" \
         -e "/Environment=REDIS_HOST=/ c Environment=REDIS_HOST=${REDIS_ENDPOINT}" \

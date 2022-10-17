@@ -32,6 +32,7 @@ resource "aws_launch_template" "launch-template" {
     DOCDB_ENDPOINT = data.aws_ssm_parameter.docdb-endpoint.value
     DOCDB_USER     = local.username
     DOCDB_PASS     = local.password
+    DB_NAME        = var.COMPONENT == "user" ? "users" : var.COMPONENT
     MYSQL_ENDPOINT = ""
   }))
 }
