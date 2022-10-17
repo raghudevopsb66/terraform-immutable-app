@@ -28,7 +28,7 @@ resource "aws_launch_template" "launch-template" {
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
     ENV            = var.ENV
     COMPONENT      = var.COMPONENT
-    REDIS_ENDPOINT = data.aws_ssm_parameter.redis-endpoint.value
+    REDIS_ENDPOINT = "test"
     DOCDB_ENDPOINT = data.aws_ssm_parameter.docdb-endpoint.value
     DOCDB_USER     = local.username
     DOCDB_PASS     = local.password
