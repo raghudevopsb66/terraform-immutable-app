@@ -14,7 +14,10 @@ else
 fi
 
 MEM=$(echo $(free -m  | grep ^Mem | awk '{print $2}')*0.8 |bc | awk -F . '{print $1}')
-sed -i -e "s/ENV/${ENV}/" -e "/Environment=REDIS_HOST=/ c Environment=REDIS_HOST=${REDIS_ENDPOINT}" -e "/MONGO_URL/ c Environment=MONGO_URL=mongodb://${DOCDB_USER}:${DOCDB_PASS}@${DOCDB_ENDPOINT}:27017/${DB_NAME}?tls=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false" /etc/systemd/system/${COMPONENT}.service /etc/filebeat/filebeat.yml
+sed -i  -e "s/ENV/${ENV}/" \
+        -e "/Environment=REDIS_HOST=/ c Environment=REDIS_HOST=${REDIS_ENDPOINT}" \
+        -e "/MONGO_URL/ c Environment=MONGO_URL=mongodb://${DOCDB_USER}:${DOCDB_PASS}@${DOCDB_ENDPOINT}:27017/${DB_NAME}?tls=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false" \
+         /etc/systemd/system/${COMPONENT}.service /etc/filebeat/filebeat.yml
 
 systemctl daemon-reload
 systemctl restart ${COMPONENT}
