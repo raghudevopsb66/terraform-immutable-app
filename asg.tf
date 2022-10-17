@@ -28,22 +28,12 @@ resource "aws_launch_template" "launch-template" {
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
     ENV            = var.ENV
     COMPONENT      = var.COMPONENT
-    REDIS_ENDPOINT = "test"
+    REDIS_ENDPOINT = data.aws_ssm_parameter.redis-endpoint.value
     DOCDB_ENDPOINT = data.aws_ssm_parameter.docdb-endpoint.value
     DOCDB_USER     = local.username
     DOCDB_PASS     = local.password
     MYSQL_ENDPOINT = ""
-    REDIS_ENDPOINT = ""
   }))
-}
-
-resource "null_resource" "test" {
-  triggers = {
-    name = timestamp()
-  }
-  provisioner "local-exec" {
-    command = "echo REDIS ENDPOINT = ${data.aws_ssm_parameter.redis-endpoint.value} >/tmp/out"
-  }
 }
 
 resource "aws_autoscaling_group" "asg" {
