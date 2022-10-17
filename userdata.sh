@@ -7,8 +7,14 @@ if [ -f /etc/nginx/default.d/roboshop.conf ]; then
   exit
 fi
 
+if [ "${COMPONENT}" == "user" ]; then
+  DB_NAME=users
+else
+  DB_NAME=$COMPONENT
+fi
+
 MEM=$(echo $(free -m  | grep ^Mem | awk '{print $2}')*0.8 |bc | awk -F . '{print $1}')
-sed -i -e "s/ENV/${ENV}/" -e "/Environment=REDIS_HOST=/ c Environment=REDIS_HOST=${REDIS_ENDPOINT}" -e "s/DOCDB_ENDPOINT/${DOCDB_ENDPOINT}/" -e "s/DOCDB_USER/${DOCDB_USER}/" -e "s/DOCDB_PASS/${DOCDB_PASS}/" /etc/systemd/system/${COMPONENT}.service /etc/filebeat/filebeat.yml
+sed -i -e "s/ENV/${ENV}/" -e "/Environment=REDIS_HOST=/ c Environment=REDIS_HOST=${REDIS_ENDPOINT}" -e "/MONGO_URL/ c Environment=MONGO_URL=mongodb://${DOCDB_USER}:${DOCDB_PASS}@${DOCDB_ENDPOINT}:27017/${DB_NAME}?tls=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false" /etc/systemd/system/${COMPONENT}.service /etc/filebeat/filebeat.yml
 
 systemctl daemon-reload
 systemctl restart ${COMPONENT}
