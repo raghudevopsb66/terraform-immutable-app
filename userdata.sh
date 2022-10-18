@@ -12,7 +12,7 @@ sed -i  -e "s/ENV/${ENV}/" \
         -e "/Environment=REDIS_HOST=/ c Environment=REDIS_HOST=${REDIS_ENDPOINT}" \
         -e "/MONGO_URL/ c Environment=MONGO_URL=\"mongodb://${DOCDB_USER}:${DOCDB_PASS}@${DOCDB_ENDPOINT}:27017/${DB_NAME}?tls=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false\"" \
         -e "/DB_HOST/ c Environment=DB_HOST=${MYSQL_ENDPOINT}" \
-        -e "/CART_ENDPOINT/ Environment=CART_ENDPOINT=cart-${ENV}.roboshop.internal:80" \
+        -e "/CART_ENDPOINT/ c Environment=CART_ENDPOINT=cart-${ENV}.roboshop.internal:80" \
         -e "s/1439/$MEM/g" \
          /etc/systemd/system/${COMPONENT}.service /etc/filebeat/filebeat.yml
 
