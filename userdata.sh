@@ -7,7 +7,9 @@ if [ -f /etc/nginx/default.d/roboshop.conf ]; then
   exit
 fi
 
+unset MEM
 MEM=$(echo $(free -m  | grep ^Mem | awk '{print $2}')*0.8 |bc | awk -F . '{print $1}')
+echo $MEM >/opt/mem
 sed -i  -e "s/ENV/${ENV}/" \
         -e "/Environment=REDIS_HOST=/ c Environment=REDIS_HOST=${REDIS_ENDPOINT}" \
         -e "/MONGO_URL/ c Environment=MONGO_URL=\"mongodb://${DOCDB_USER}:${DOCDB_PASS}@${DOCDB_ENDPOINT}:27017/${DB_NAME}?tls=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false\"" \
