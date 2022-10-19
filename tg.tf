@@ -4,7 +4,7 @@ resource "aws_lb_target_group" "tg" {
   port                 = var.APP_PORT
   protocol             = "HTTP"
   vpc_id               = data.terraform_remote_state.infra.outputs.vpc_id
-  deregistration_delay = 0
+  deregistration_delay = 60
   health_check {
     enabled             = true
     healthy_threshold   = 2
